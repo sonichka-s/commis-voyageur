@@ -16,3 +16,5 @@ target_include_directories(Route PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(WeightListGraph WeightListGraph.cpp WeightListGraph.h)
 target_include_directories(WeightListGraph PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+target_link_libraries(commis_voyageur LINK_PUBLIC Experiment Route WeightListGraph)
+
