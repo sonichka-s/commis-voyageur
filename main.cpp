@@ -1,4 +1,6 @@
 #include "iostream"
+#include "ctime"
+
 #include "vector"
 #include "BoxMuller.h"
 #include "WeightListGraph.h"

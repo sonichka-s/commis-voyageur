@@ -8,7 +8,6 @@
 #include "cstdlib"
 #include "vector"
 #include "cmath"
-#include "ctime"
 
 struct BoxMuller {
     BoxMuller(int count);
