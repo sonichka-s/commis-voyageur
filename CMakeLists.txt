@@ -3,4 +3,16 @@ project(commis_voyageur)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(commis_voyageur main.cpp Route.cpp Route.h WeightListGraph.cpp WeightListGraph.h BoxMuller.h Experiment.cpp Experiment.h)
+add_executable(commis_voyageur main.cpp BoxMuller.h)
+
+add_subdirectory(tests)
+
+add_library(Experiment Experiment.cpp Experiment.h)
+target_include_directories(Experiment PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(Route Route.cpp Route.h)
+target_include_directories(Route PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(WeightListGraph WeightListGraph.cpp WeightListGraph.h)
+target_include_directories(WeightListGraph PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
