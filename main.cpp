@@ -20,7 +20,7 @@ std::vector<double> experiments(int count) {
             }
         }
 
-        double PrimeWeight = Route::Prime(graph);
+        double PrimeWeight = Route::MSTRoute(graph);
         double OptWeight = Route::Enumeration(graph);
 
         values.push_back(Experiment::approximation(PrimeWeight, OptWeight));

@@ -9,8 +9,8 @@ void WeightListGraph::AddEdge(int from, int to, double weight) {
     vertices[to].push_back(std::make_pair(from, weight));
 }
 
-std::vector<std::pair<int, double>> WeightListGraph::GetNextVertices(std::pair<int, double> vertex) {
-    std::vector<std::pair<int, double>> result(vertices[vertex.first].begin(), vertices[vertex.first].end());
+std::vector<std::pair<int, double>> WeightListGraph::GetNextVertices(int vertex) {
+    std::vector<std::pair<int, double>> result(vertices[vertex].begin(), vertices[vertex].end());
     return result;
 }
 

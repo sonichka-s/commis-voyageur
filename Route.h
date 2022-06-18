@@ -7,12 +7,14 @@
 
 #include "iostream"
 #include "set"
+#include "stack"
 #include "algorithm"
 #include "WeightListGraph.h"
 
 
 namespace Route {
-    double Prime(WeightListGraph& graph);
+    void Prime(WeightListGraph& graph, WeightListGraph& mst);
+    double MSTRoute(WeightListGraph& graph);
     double Enumeration(WeightListGraph& graph);
 };
 

@@ -4,9 +4,8 @@
 
 #include "Route.h"
 
-double Route::Prime(WeightListGraph &graph) {
+void Route::Prime(WeightListGraph &graph, WeightListGraph& mst) {
     int verticesCount = graph.GetVerticesCount();
-    double resultWeight = 0;
 
     std::set<std::pair<int, double>> pQueue;
     std::vector<bool> inMST(verticesCount, false);
@@ -21,7 +20,7 @@ double Route::Prime(WeightListGraph &graph) {
         std::pair<int, double> from = *pQueue.begin();
         pQueue.erase(pQueue.begin());
         inMST[from.first] = true;
-        std::vector<std::pair<int, double>> nextVertices = graph.GetNextVertices(from);
+        std::vector<std::pair<int, double>> nextVertices = graph.GetNextVertices(from.first);
 
         for (auto& next: nextVertices) {
             if(!inMST[next.first] && next.second < minWeight[next.first]) {
@@ -34,22 +33,64 @@ double Route::Prime(WeightListGraph &graph) {
         }
     }
 
-    for (int i = 0; i < minWeight.size(); ++i) {
-        resultWeight += minWeight[i];
+    for (int i = 1; i < minWeight.size(); ++i) {
+        mst.AddEdge(i, parent[i], minWeight[i]);
+    }
+}
+
+double Route::MSTRoute(WeightListGraph &graph) {
+    int verticesCount = graph.GetVerticesCount();
+
+    WeightListGraph mst(verticesCount);
+    Prime(graph, mst);
+
+    std::pair<int, double> root(0, 0);
+    std::vector<int> visited(verticesCount, false);
+    std::stack<std::pair<int, double>> stack;
+    std::vector<int> order;
+
+    stack.push(root);
+    double mstWeight = 0;
+
+    while (!stack.empty()) {
+        std::pair<int, double> from = stack.top();
+        order.push_back(from.first);
+        stack.pop();
+
+        visited[from.first] = true;
+        std::vector<std::pair<int, double>> nextVertices = mst.GetNextVertices(from.first);
+        std::reverse(nextVertices.begin(), nextVertices.end());
+
+        for (auto& next: nextVertices) {
+            if(!visited[next.first]) {
+                stack.push(next);
+            }
+        }
     }
 
-    return resultWeight;
+    for (int i = 0; i < order.size() - 1; ++i) {
+        double vertexWeight = graph.GetWeight(order[i], order[i + 1]);
+        if (vertexWeight != -1)
+            mstWeight += vertexWeight;
+    }
+    mstWeight += graph.GetWeight(order[order.size() - 1], 0);
+
+    return mstWeight;
 }
 
 double Route::Enumeration(WeightListGraph &graph) {
     int verticesCount = graph.GetVerticesCount();
     std::vector<double> weights;
 
+    std::vector<int> vertices;
     for (int i = 0; i < verticesCount; ++i) {
+        vertices.push_back(i);
+    }
+
+    while (std::next_permutation(vertices.begin(), vertices.end())) {
         double weight = 0;
-        double vertexWeight;
-        for (int j = 0; j < verticesCount; ++j) {
-            vertexWeight = graph.GetWeight(j, j + 1);
+        for (int i = 0; i < verticesCount - 1; ++i) {
+            double vertexWeight = graph.GetWeight(vertices[i], vertices[i + 1]);
             if(vertexWeight != -1)
                 weight += vertexWeight;
         }

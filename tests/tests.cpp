@@ -33,17 +33,17 @@ TEST(weight_graph, add_vertices) {
     graph.AddEdge(1, 2, 5);
     graph.AddEdge(2, 0, 4);
 
-    std::vector<std::pair<int, double>> firstNextVertices = graph.GetNextVertices(std::make_pair(0, 3));
+    std::vector<std::pair<int, double>> firstNextVertices = graph.GetNextVertices(0);
 
     ASSERT_EQ(firstNextVertices[0], v0_1);
     ASSERT_EQ(firstNextVertices[1], v0_2);
 
-    std::vector<std::pair<int, double>> secondNextVertices = graph.GetNextVertices(std::make_pair(1, 3));
+    std::vector<std::pair<int, double>> secondNextVertices = graph.GetNextVertices(1);
 
     ASSERT_EQ(secondNextVertices[0], v1_0);
     ASSERT_EQ(secondNextVertices[1], v1_2);
 
-    std::vector<std::pair<int, double>> thirdNextVertices = graph.GetNextVertices(std::make_pair(2, 4));
+    std::vector<std::pair<int, double>> thirdNextVertices = graph.GetNextVertices(2);
 
     ASSERT_EQ(thirdNextVertices[0], v2_1);
     ASSERT_EQ(thirdNextVertices[1], v2_0);
@@ -98,7 +98,12 @@ TEST(Route, prime) {
     graph.AddEdge(1, 2, 2);
     graph.AddEdge(2, 0, 4);
 
-    ASSERT_EQ(Route::Prime(graph), 5);
+    double PrimeWeight = Route::MSTRoute(graph);
+    double OptWeight = Route::Enumeration(graph);
+
+    std::cout << PrimeWeight << ' ' << OptWeight;
+
+    ASSERT_EQ(Route::MSTRoute(graph) > Route::Enumeration(graph), true);
 }
 
 TEST(Route, enumeration) {

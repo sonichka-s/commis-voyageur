@@ -15,7 +15,7 @@ public:
 
     void AddEdge(int from, int to, double weight);
 
-    std::vector<std::pair<int, double>> GetNextVertices(std::pair<int, double> vertex);
+    std::vector<std::pair<int, double>> GetNextVertices(int vertex);
 
     std::vector<std::pair<int, double>> GetPrevVertices(std::pair<int, double> vertex);
 
