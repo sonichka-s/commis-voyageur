@@ -95,6 +95,8 @@ double Route::Enumeration(WeightListGraph &graph) {
                 weight += vertexWeight;
         }
 
+        weight += graph.GetWeight(vertices[verticesCount - 1], 0);
+
         weights.push_back(weight);
     }
 

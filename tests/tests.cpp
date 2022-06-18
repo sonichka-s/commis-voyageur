@@ -98,20 +98,5 @@ TEST(Route, prime) {
     graph.AddEdge(1, 2, 2);
     graph.AddEdge(2, 0, 4);
 
-    double PrimeWeight = Route::MSTRoute(graph);
-    double OptWeight = Route::Enumeration(graph);
-
-    std::cout << PrimeWeight << ' ' << OptWeight;
-
     ASSERT_EQ(Route::MSTRoute(graph) > Route::Enumeration(graph), true);
-}
-
-TEST(Route, enumeration) {
-    WeightListGraph graph(3);
-
-    graph.AddEdge(0, 1, 3);
-    graph.AddEdge(1, 2, 2);
-    graph.AddEdge(2, 0, 4);
-
-    ASSERT_EQ(Route::Enumeration(graph), 5);
 }
