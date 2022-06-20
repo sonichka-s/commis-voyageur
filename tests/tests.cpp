@@ -16,7 +16,6 @@ std::pair<int, double> v1_2(2, 5);
 std::pair<int, double> v2_0(0, 4);
 std::pair<int, double> v2_1(1, 5);
 
-
 //количество вершин
 int verticesCount = 3;
 
@@ -91,12 +90,27 @@ TEST(experiment, standard_deviation) {
     ASSERT_EQ(Experiment::standardDeviation(testValues), 0);
 }
 
-TEST(Route, prime) {
+TEST(Route, routes_for_two) {
     WeightListGraph graph(3);
 
     graph.AddEdge(0, 1, 3);
     graph.AddEdge(1, 2, 2);
     graph.AddEdge(2, 0, 4);
+
+    ASSERT_EQ(Route::MSTRoute(graph) > Route::Enumeration(graph), true);
+}
+
+TEST(Route, routes_for_ten) {
+    WeightListGraph graph(10);
+
+    for (int i = 0; i < 10; ++i) {
+        for (int j = i + 1; j < 10; ++j) {
+            graph.AddEdge(i, j, i + j);
+        }
+    }
+
+    double PrimeWeight = Route::MSTRoute(graph);
+    double OptWeight = Route::Enumeration(graph);
 
     ASSERT_EQ(Route::MSTRoute(graph) > Route::Enumeration(graph), true);
 }
