@@ -4,10 +4,20 @@
 
 #include "Route.h"
 
+template<typename T1, typename T2>
+struct Comparator
+{
+    bool operator() (const std::pair<T1, T2>& lhs,
+                     const std::pair<T1, T2>& rhs) const
+    {
+        return lhs.second < rhs.second;
+    }
+};
+
 void Route::Prime(WeightListGraph &graph, WeightListGraph& mst) {
     int verticesCount = graph.GetVerticesCount();
 
-    std::set<std::pair<int, double>> pQueue;
+    std::set<std::pair<int, double>, Comparator<int, double>> pQueue;
     std::vector<bool> inMST(verticesCount, false);
 
     std::vector<int> parent(verticesCount, -1);

@@ -8,6 +8,7 @@
 #include "iostream"
 #include "set"
 #include "stack"
+#include "queue"
 #include "algorithm"
 #include "WeightListGraph.h"
 
@@ -17,6 +18,5 @@ namespace Route {
     double MSTRoute(WeightListGraph& graph);
     double Enumeration(WeightListGraph& graph);
 };
-
 
 #endif //COMMIS_VOYAGEUR_ROUTE_H
